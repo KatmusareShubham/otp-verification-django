@@ -3,6 +3,7 @@ from django.http import JsonResponse
 import json
 from UserManagement.models import UserDetail
 from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate, logout
 
 # Create your views here.
 def user_registration(request):
@@ -29,6 +30,20 @@ def user_registration(request):
 
     userdetails = UserDetail.objects.create(contact=contact,address=address,role=role,user=user)
 
-    return JsonResponse({'response': 'Registered successfully'})
+    return JsonResponse({'response':'Registered successfully'})
 
 
+def login_view(request):
+    data = json.loads(request.body)
+    username = data.get('username')
+    password = data.get('password')
+
+    user = authenticate(username=username, password=password)
+    if not user:
+        return JsonResponse({"response":"Wrong credentials"})
+
+    if not user.is_active:
+        return JsonResponse({"response": "INVALID account"})
+
+    login(request, user)
+    return JsonResponse({"response": "LOG in successfully"})
