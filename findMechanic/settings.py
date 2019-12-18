@@ -121,3 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# opt code
+
+SMS_API_KEY = 'iRDC2jyAE1oSgMYebGLaJBt5x7Q4z0udnKfw6OkZHvFTUmWhslq0CWprGYvFTVKa8xRBu5emDfiAok2t'
+
+SMS_URL = 'https://www.fast2sms.com/dev/bulk'

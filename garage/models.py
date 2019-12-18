@@ -10,8 +10,13 @@ class Garage(models.Model):
     contact = models.IntegerField(null=True)
     lat = models.FloatField()
     longi = models.FloatField()
+    # otp
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.garage_name
 
-
+class Otp(models.Model):
+    otp=models.CharField(max_length=6)
+    contact = models.IntegerField(null=False)
+    is_verified = models.BooleanField(default=False)
