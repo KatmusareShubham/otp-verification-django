@@ -30,7 +30,7 @@ def user_registration(request):
 
     userdetails = UserDetail.objects.create(contact=contact,address=address,role=role,user=user)
 
-    return JsonResponse({'response':'Registered successfully'})
+    return JsonResponse({'response':'USER registered successfully'})
 
 
 def login_view(request):
@@ -44,6 +44,8 @@ def login_view(request):
 
     if not user.is_active:
         return JsonResponse({"response": "INVALID account"})
-
+    print("user", user)
     login(request, user)
     return JsonResponse({"response": "LOG in successfully"})
+
+
