@@ -10,6 +10,11 @@ from django.utils.crypto import get_random_string
 
 from django.contrib.auth import login, authenticate, logout
 
+# code for mongodb
+from garage.mongo_config import connect_db
+
+db = connect_db("garrage_owner")
+
 # Create your views here.
 def Create_garage_With_owner(request):
     data = json.loads(request.body)
@@ -45,6 +50,10 @@ def Create_garage_With_owner(request):
     garage=Garage.objects.create(garage_name=garage_name,city=city,
         lat=lat,longi=longi,owner=garage_owner)
 
+    #write in mongodb
+
+    db.owner.insert_one({'city' : city, 'contact' : contact })
+
     otp_sent = send_otp(contact)
     if otp_sent:
         return JsonResponse({'response':'Otp sent successfully'})
@@ -77,7 +86,7 @@ def get_garage(request):
 
 def verify_otp(request):
     data = json.loads(request.body)
-    contact = data.get"(contact")
+    contact = data.get("contact")
     otp = data.get("otp")
 
     instance = Otp.objects.filter(contact=contact,is_verified=False).last()
@@ -119,3 +128,7 @@ def send_otp(contact):
         return True
     else:
         return False
+
+
+
+
